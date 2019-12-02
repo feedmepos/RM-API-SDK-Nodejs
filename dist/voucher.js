@@ -21,9 +21,7 @@ function issueVoucher(accessToken, batchKey) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err); });
+    });
 }
 exports.issueVoucher = issueVoucher;
 function voidVoucher(accessToken, code) {
@@ -45,9 +43,7 @@ function voidVoucher(accessToken, code) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err); });
+    });
 }
 exports.voidVoucher = voidVoucher;
 function getVoucherByCode(accessToken, code) {
@@ -69,9 +65,7 @@ function getVoucherByCode(accessToken, code) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err); });
+    });
 }
 exports.getVoucherByCode = getVoucherByCode;
 function getVoucherBatches(accessToken) {
@@ -93,9 +87,7 @@ function getVoucherBatches(accessToken) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err); });
+    });
 }
 exports.getVoucherBatches = getVoucherBatches;
 function getVoucherBatchByKey(accessToken, batchKey) {
@@ -117,9 +109,7 @@ function getVoucherBatchByKey(accessToken, batchKey) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err); });
+    });
 }
 exports.getVoucherBatchByKey = getVoucherBatchByKey;
 //# sourceMappingURL=voucher.js.map

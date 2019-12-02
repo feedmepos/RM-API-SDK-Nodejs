@@ -1,11 +1,23 @@
 import { AxiosInstance } from 'axios';
 import { ILoyaltyRewardArg } from './loyalty';
-interface config {
-    timeout?: number;
-    isProduction?: boolean;
-    clientId: string;
-    clientSecret: string;
-    privateKey: string;
+export declare namespace RM {
+    interface Config {
+        timeout?: number;
+        isProduction?: boolean;
+        clientId: string;
+        clientSecret: string;
+        privateKey: string;
+    }
+    interface Response<T = {}> {
+        status: string;
+        success: boolean;
+        data: T;
+        error: RMError;
+    }
+    class RMError extends Error {
+        code: string;
+        constructor(message: string, code: string);
+    }
 }
 export interface RMSDKInstance {
     timeout: number;
@@ -62,6 +74,6 @@ export interface RMSDKInstance {
         getTransactionsByCode: (accessToken: string, code: string) => Promise<any>;
     };
 }
-export declare function RMSDK(instanceConfig?: config): RMSDKInstance;
+export declare function RMSDK(instanceConfig?: RM.Config): RMSDKInstance;
 export default RMSDK;
 //# sourceMappingURL=index.d.ts.map

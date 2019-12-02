@@ -13,9 +13,7 @@ function getClientCredentials() {
         method: 'post',
         data: { grantType: 'client_credentials' },
         headers: { 'Authorization': 'Basic ' + basic_signature },
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err); });
+    });
 }
 exports.getClientCredentials = getClientCredentials;
 /**
@@ -32,9 +30,7 @@ function refreshToken(refreshToken) {
             refreshToken: refreshToken,
         },
         headers: { 'Authorization': 'Basic ' + basic_signature },
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err); });
+    });
 }
 exports.refreshToken = refreshToken;
 //# sourceMappingURL=credentials.js.map

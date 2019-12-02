@@ -21,9 +21,7 @@ function getUserProfile(accessToken) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err); });
+    });
 }
 exports.getUserProfile = getUserProfile;
 //# sourceMappingURL=user.js.map

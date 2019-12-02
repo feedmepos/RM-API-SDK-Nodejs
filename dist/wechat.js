@@ -26,9 +26,7 @@ function getWechatOauthUrl(accessToken, redirectUrl) {
                 timestamp: timestamp,
             }, this.privateKey)
         },
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err); });
+    });
 }
 exports.getWechatOauthUrl = getWechatOauthUrl;
 function getWechatUserByCode(accessToken, code) {
@@ -52,9 +50,7 @@ function getWechatUserByCode(accessToken, code) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err); });
+    });
 }
 exports.getWechatUserByCode = getWechatUserByCode;
 //# sourceMappingURL=wechat.js.map

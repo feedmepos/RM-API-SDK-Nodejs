@@ -22,9 +22,7 @@ function giveLoyaltyPoint(accessToken, data) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err); });
+    });
 }
 exports.giveLoyaltyPoint = giveLoyaltyPoint;
 //# sourceMappingURL=loyalty.js.map

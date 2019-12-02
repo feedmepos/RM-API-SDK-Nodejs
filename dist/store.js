@@ -21,9 +21,7 @@ function getStores(accessToken) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err); });
+    });
 }
 exports.getStores = getStores;
 function getStoreById(accessToken, storeId) {
@@ -45,9 +43,7 @@ function getStoreById(accessToken, storeId) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err); });
+    });
 }
 exports.getStoreById = getStoreById;
 function createStore(accessToken, data) {
@@ -70,9 +66,7 @@ function createStore(accessToken, data) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err); });
+    });
 }
 exports.createStore = createStore;
 function updateStore(accessToken, storeId, data) {
@@ -95,9 +89,7 @@ function updateStore(accessToken, storeId, data) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err); });
+    });
 }
 exports.updateStore = updateStore;
 function deleteStore(accessToken, storeId) {
@@ -119,9 +111,7 @@ function deleteStore(accessToken, storeId) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err); });
+    });
 }
 exports.deleteStore = deleteStore;
 //# sourceMappingURL=store.js.map

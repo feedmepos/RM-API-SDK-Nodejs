@@ -6,5 +6,5 @@ export interface ILoyaltyRewardArg {
     countryCode?: string;
     phoneNumber?: string;
 }
-export declare function giveLoyaltyPoint(this: RMSDKInstance, accessToken: string, data: ILoyaltyRewardArg): Promise<any>;
+export declare function giveLoyaltyPoint(this: RMSDKInstance, accessToken: string, data: ILoyaltyRewardArg): import("axios").AxiosPromise<any>;
 //# sourceMappingURL=loyalty.d.ts.map

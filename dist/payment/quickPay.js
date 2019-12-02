@@ -27,9 +27,7 @@ function initQuickPay(accessToken, data) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err.response.data); });
+    });
 }
 exports.initQuickPay = initQuickPay;
 function refund(accessToken, data) {
@@ -52,9 +50,7 @@ function refund(accessToken, data) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err.response.data); });
+    });
 }
 exports.refund = refund;
 function reverse(accessToken, data) {
@@ -77,9 +73,7 @@ function reverse(accessToken, data) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err.response.data); });
+    });
 }
 exports.reverse = reverse;
 function getPaymentTransactions(accessToken) {
@@ -103,9 +97,7 @@ function getPaymentTransactions(accessToken) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err.response.data); });
+    });
 }
 exports.getPaymentTransactions = getPaymentTransactions;
 function getPaymentTransactionById(accessToken, Id) {
@@ -129,9 +121,7 @@ function getPaymentTransactionById(accessToken, Id) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err.response.data); });
+    });
 }
 exports.getPaymentTransactionById = getPaymentTransactionById;
 function getPaymentTransactionByOrderId(accessToken, orderId) {
@@ -155,9 +145,7 @@ function getPaymentTransactionByOrderId(accessToken, orderId) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err.response.data); });
+    });
 }
 exports.getPaymentTransactionByOrderId = getPaymentTransactionByOrderId;
 function getDailySettlementReport(accessToken, data) {
@@ -180,9 +168,7 @@ function getDailySettlementReport(accessToken, data) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err.response.data); });
+    });
 }
 exports.getDailySettlementReport = getDailySettlementReport;
 //# sourceMappingURL=quickPay.js.map

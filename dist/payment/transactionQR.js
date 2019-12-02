@@ -22,9 +22,7 @@ function createTransactionUrl(accessToken, data) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err); });
+    });
 }
 exports.createTransactionUrl = createTransactionUrl;
 function getTransactionUrl(accessToken) {
@@ -46,9 +44,7 @@ function getTransactionUrl(accessToken) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err); });
+    });
 }
 exports.getTransactionUrl = getTransactionUrl;
 function getTransactionUrlByCode(accessToken, code) {
@@ -70,9 +66,7 @@ function getTransactionUrlByCode(accessToken, code) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err); });
+    });
 }
 exports.getTransactionUrlByCode = getTransactionUrlByCode;
 function getTransactionsByCode(accessToken, code) {
@@ -94,9 +88,7 @@ function getTransactionsByCode(accessToken, code) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    })
-        .then(function (x) { return x.data; })
-        .catch(function (err) { return console.error(err); });
+    });
 }
 exports.getTransactionsByCode = getTransactionsByCode;
 //# sourceMappingURL=transactionQR.js.map

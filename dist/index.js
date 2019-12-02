@@ -1,4 +1,17 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -21,6 +34,41 @@ var store_1 = require("./store");
 var loyalty_1 = require("./loyalty");
 var voucher_1 = require("./voucher");
 var wechat_1 = require("./wechat");
+var RM;
+(function (RM) {
+    var RMError = /** @class */ (function (_super) {
+        __extends(RMError, _super);
+        function RMError(message, code) {
+            var _this = _super.call(this, message) || this;
+            _this.code = code;
+            return _this;
+        }
+        return RMError;
+    }(Error));
+    RM.RMError = RMError;
+})(RM = exports.RM || (exports.RM = {}));
+function axiosFactory(url, timeout) {
+    var client = axios_1.default.create({
+        baseURL: url,
+        timeout: timeout,
+        headers: {
+            'User-Agent': 'RM API Client Nodejs',
+            'Content-Type': 'application/json'
+        }
+    });
+    client.interceptors.response.use(function (response) {
+        if (response && response.data && response.data.error) {
+            return Promise.reject(new RM.RMError(response.data.error.message, response.data.error.code));
+        }
+        return response;
+    }, function (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            return Promise.reject(new RM.RMError(error.response.data.error.message, error.response.data.error.code));
+        }
+        return Promise.reject(new RM.RMError('unhandled revenue monster error', 'UNKNOWN_ERROR'));
+    });
+    return client;
+}
 function RMSDK(instanceConfig) {
     var defaults = {
         timeout: 2000,
@@ -38,22 +86,8 @@ function RMSDK(instanceConfig) {
     var openApiUrl = config.isProduction
         ? 'https://open.revenuemonster.my/' + config.openApiVersion
         : 'https://sb-open.revenuemonster.my/' + config.openApiVersion;
-    var oauthInstance = axios_1.default.create({
-        baseURL: oauthUrl,
-        timeout: config.timeout,
-        headers: {
-            'User-Agent': 'RM API Client Nodejs',
-            'Content-Type': 'application/json'
-        }
-    });
-    var openApiInstance = axios_1.default.create({
-        baseURL: openApiUrl,
-        timeout: config.timeout,
-        headers: {
-            'User-Agent': 'RM API Client Nodejs',
-            'Content-Type': 'application/json'
-        }
-    });
+    var oauthInstance = axiosFactory(oauthUrl, config.timeout);
+    var openApiInstance = axiosFactory(openApiUrl, config.timeout);
     return {
         timeout: config.timeout,
         isProduction: config.isProduction,
