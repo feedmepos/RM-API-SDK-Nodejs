@@ -3,7 +3,11 @@ import crypto = require('crypto');
 export function sortObject(obj: any): any {
     const ordered: any = {};
     Object.keys(obj).sort().forEach((key): void => {
-      ordered[key] = obj[key];
+        if(typeof obj[key] === 'object') {
+            ordered[key] = sortObject(obj[key]);
+        } else {
+            ordered[key] = obj[key];
+        }
     });
     return ordered;
 }
