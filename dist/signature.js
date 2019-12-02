@@ -4,7 +4,12 @@ var crypto = require("crypto");
 function sortObject(obj) {
     var ordered = {};
     Object.keys(obj).sort().forEach(function (key) {
-        ordered[key] = obj[key];
+        if (typeof obj[key] === 'object') {
+            ordered[key] = sortObject(obj[key]);
+        }
+        else {
+            ordered[key] = obj[key];
+        }
     });
     return ordered;
 }
