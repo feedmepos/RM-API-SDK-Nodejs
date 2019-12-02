@@ -23,8 +23,6 @@ export function getMerchantProfile(this: RMSDKInstance, accessToken: string) {
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }
 
 export function getMerchantSubscriptions(this: RMSDKInstance, accessToken: string) {
@@ -48,6 +46,4 @@ export function getMerchantSubscriptions(this: RMSDKInstance, accessToken: strin
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }

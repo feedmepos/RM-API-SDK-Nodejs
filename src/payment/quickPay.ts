@@ -29,8 +29,6 @@ export function initQuickPay(this: RMSDKInstance, accessToken: string, data: obj
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err.response.data))
 }
     
 export function refund(this: RMSDKInstance, accessToken: string, data: object) {
@@ -55,8 +53,6 @@ export function refund(this: RMSDKInstance, accessToken: string, data: object) {
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err.response.data))
 }
 
 export function reverse(this: RMSDKInstance, accessToken: string, data: object) {
@@ -81,8 +77,6 @@ export function reverse(this: RMSDKInstance, accessToken: string, data: object) 
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err.response.data))
 }
 
 export function getPaymentTransactions(this: RMSDKInstance, accessToken: string) {
@@ -108,8 +102,6 @@ export function getPaymentTransactions(this: RMSDKInstance, accessToken: string)
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err.response.data))
 }
     
 export function getPaymentTransactionById(this: RMSDKInstance, accessToken: string, Id: string) {
@@ -135,8 +127,6 @@ export function getPaymentTransactionById(this: RMSDKInstance, accessToken: stri
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err.response.data))
 }
 
 export function getPaymentTransactionByOrderId(this: RMSDKInstance, accessToken: string, orderId: string) {
@@ -162,8 +152,6 @@ export function getPaymentTransactionByOrderId(this: RMSDKInstance, accessToken:
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err.response.data))
 }
 
 export function getDailySettlementReport(this: RMSDKInstance, accessToken: string, data: object) {
@@ -188,6 +176,4 @@ export function getDailySettlementReport(this: RMSDKInstance, accessToken: strin
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err.response.data))
 }

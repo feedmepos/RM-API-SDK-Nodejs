@@ -24,8 +24,6 @@ export function createTransactionUrl(this: RMSDKInstance, accessToken: string, d
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }
 
 export function getTransactionUrl(this: RMSDKInstance, accessToken: string) {
@@ -49,8 +47,6 @@ export function getTransactionUrl(this: RMSDKInstance, accessToken: string) {
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }
 
 export function getTransactionUrlByCode(this: RMSDKInstance, accessToken: string, code: string) {
@@ -74,8 +70,6 @@ export function getTransactionUrlByCode(this: RMSDKInstance, accessToken: string
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }
 
 export function getTransactionsByCode(this: RMSDKInstance, accessToken: string, code: string) {
@@ -99,6 +93,4 @@ export function getTransactionsByCode(this: RMSDKInstance, accessToken: string, 
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }

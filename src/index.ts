@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosInstance, AxiosResponse } from 'axios'
 
 import { getClientCredentials, refreshToken } from './credentials'
 import {
@@ -38,12 +38,29 @@ import {
   getWechatUserByCode,
 } from './wechat'
 
-interface config {
-  timeout?: number
-  isProduction?: boolean
-  clientId: string
-  clientSecret: string
-  privateKey: string
+export namespace RM {
+  export interface Config {
+    timeout?: number
+    isProduction?: boolean
+    clientId: string
+    clientSecret: string
+    privateKey: string
+  }
+  
+  export interface Response<T = {}> {
+    status: string;
+    success: boolean;
+    data: T;
+    error: RMError;
+  }
+  
+  export class RMError extends Error {
+    code: string;
+    constructor(message: string , code: string) {
+      super(message);
+      this.code = code;
+    }
+  }
 }
 
 export interface RMSDKInstance {
@@ -116,7 +133,33 @@ export interface RMSDKInstance {
   }
 }
 
-export function RMSDK(instanceConfig?: config): RMSDKInstance {
+function axiosFactory(url: string, timeout: number): AxiosInstance {
+  const client = axios.create({
+    baseURL: url,
+    timeout: timeout,
+    headers: {
+      'User-Agent': 'RM API Client Nodejs',
+      'Content-Type': 'application/json'
+    }
+  });
+  client.interceptors.response.use(
+    (response: AxiosResponse<RM.Response>): any => {
+      if (response && response.data && response.data.error) {
+        return Promise.reject(new RM.RMError(response.data.error.message, response.data.error.code));
+      }
+      return response;
+    },
+    (error): Promise<any> => {
+      if (error.response && error.response.data && error.response.data.error) {
+        return Promise.reject(new RM.RMError(error.response.data.error.message, error.response.data.error.code));
+      }
+      return Promise.reject(new RM.RMError('unhandled revenue monster error', 'UNKNOWN_ERROR'));
+    },
+  );
+  return client;
+}
+
+export function RMSDK(instanceConfig?: RM.Config): RMSDKInstance {
   const defaults = {
     timeout: 2000,
     isProduction: false,
@@ -139,23 +182,9 @@ export function RMSDK(instanceConfig?: config): RMSDKInstance {
     ? 'https://open.revenuemonster.my/' + config.openApiVersion
     : 'https://sb-open.revenuemonster.my/' + config.openApiVersion 
 
-  const oauthInstance = axios.create({
-    baseURL: oauthUrl,
-    timeout: config.timeout,
-    headers: {
-      'User-Agent': 'RM API Client Nodejs',
-      'Content-Type': 'application/json'
-    }
-  })
+  const oauthInstance = axiosFactory(oauthUrl, config.timeout);
 
-  const openApiInstance = axios.create({
-    baseURL: openApiUrl,
-    timeout: config.timeout,
-    headers: {
-      'User-Agent': 'RM API Client Nodejs',
-      'Content-Type': 'application/json'
-    }
-  })
+  const openApiInstance = axiosFactory(openApiUrl, config.timeout);
 
   return {
     timeout: config.timeout,

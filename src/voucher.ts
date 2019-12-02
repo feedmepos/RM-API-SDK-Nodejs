@@ -23,8 +23,6 @@ export function issueVoucher(this: RMSDKInstance, accessToken: string, batchKey:
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }
 
 export function voidVoucher(this: RMSDKInstance, accessToken: string, code: string) {
@@ -48,8 +46,6 @@ export function voidVoucher(this: RMSDKInstance, accessToken: string, code: stri
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }
 
 export function getVoucherByCode(this: RMSDKInstance, accessToken: string, code: string) {
@@ -73,8 +69,6 @@ export function getVoucherByCode(this: RMSDKInstance, accessToken: string, code:
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }
 
 export function getVoucherBatches(this: RMSDKInstance, accessToken: string) {
@@ -98,8 +92,6 @@ export function getVoucherBatches(this: RMSDKInstance, accessToken: string) {
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }
 
 export function getVoucherBatchByKey(this: RMSDKInstance, accessToken: string, batchKey: string) {
@@ -123,6 +115,4 @@ export function getVoucherBatchByKey(this: RMSDKInstance, accessToken: string, b
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }

@@ -15,8 +15,6 @@ export function getClientCredentials(this: RMSDKInstance) {
         data: { grantType: 'client_credentials' },
         headers: { 'Authorization': 'Basic ' + basic_signature },
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }
 
 /**
@@ -35,6 +33,4 @@ export function refreshToken(this: RMSDKInstance, refreshToken: string) {
         },
         headers: { 'Authorization': 'Basic ' + basic_signature },
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }

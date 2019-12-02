@@ -23,6 +23,4 @@ export function getUserProfile(this: RMSDKInstance, accessToken: string) {
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }

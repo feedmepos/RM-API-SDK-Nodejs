@@ -23,8 +23,6 @@ export function getStores(this: RMSDKInstance, accessToken: string) {
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }
 
 export function getStoreById(this: RMSDKInstance, accessToken: string, storeId: string) {
@@ -48,8 +46,6 @@ export function getStoreById(this: RMSDKInstance, accessToken: string, storeId: 
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }
 
 export function createStore(this: RMSDKInstance, accessToken: string, data: object) {
@@ -74,8 +70,6 @@ export function createStore(this: RMSDKInstance, accessToken: string, data: obje
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }
 
 export function updateStore(this: RMSDKInstance, accessToken: string, storeId: string, data: object) {
@@ -100,8 +94,6 @@ export function updateStore(this: RMSDKInstance, accessToken: string, storeId: s
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }
 
 export function deleteStore(this: RMSDKInstance, accessToken: string, storeId: string) {
@@ -125,6 +117,4 @@ export function deleteStore(this: RMSDKInstance, accessToken: string, storeId: s
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }

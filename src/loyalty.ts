@@ -32,6 +32,4 @@ export function giveLoyaltyPoint(this: RMSDKInstance, accessToken: string, data:
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }

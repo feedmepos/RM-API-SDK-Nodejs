@@ -28,8 +28,6 @@ export function getWechatOauthUrl(this: RMSDKInstance, accessToken: string, redi
             }, this.privateKey)
         },
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }
 
 export function getWechatUserByCode(this: RMSDKInstance, accessToken: string, code: string) {
@@ -55,6 +53,4 @@ export function getWechatUserByCode(this: RMSDKInstance, accessToken: string, co
             }, this.privateKey)
         }
     })
-    .then(x => x.data)
-    .catch(err => console.error(err))
 }
