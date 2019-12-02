@@ -52,7 +52,6 @@ function axiosFactory(url, timeout) {
         baseURL: url,
         timeout: timeout,
         headers: {
-            'User-Agent': 'RM API Client Nodejs',
             'Content-Type': 'application/json'
         }
     });

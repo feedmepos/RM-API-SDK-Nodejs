@@ -138,7 +138,6 @@ function axiosFactory(url: string, timeout: number): AxiosInstance {
     baseURL: url,
     timeout: timeout,
     headers: {
-      'User-Agent': 'RM API Client Nodejs',
       'Content-Type': 'application/json'
     }
   });
