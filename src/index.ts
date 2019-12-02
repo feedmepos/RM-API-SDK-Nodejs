@@ -1,5 +1,4 @@
 import axios, { AxiosInstance } from 'axios'
-import { merge } from 'lodash'
 
 import { getClientCredentials, refreshToken } from './credentials'
 import {
@@ -127,7 +126,10 @@ export function RMSDK(instanceConfig?: config): RMSDKInstance {
     oauthApiVersion: 'v1',
     openApiVersion: 'v3',
   }
-  const config = merge(defaults, instanceConfig)
+  const config = {
+    ...defaults,
+    ...instanceConfig
+  }
 
   const oauthUrl = config.isProduction
     ? 'https://oauth.revenuemonster.my/' + config.oauthApiVersion

@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var crypto = require("crypto");
-var lodash_1 = require("lodash");
 function sortObject(obj) {
-    var keys = Object.keys(obj);
-    var sortedKeys = lodash_1.sortBy(keys);
-    return lodash_1.fromPairs(lodash_1.map(sortedKeys, function (key) { return [key, obj[key]]; }));
+    var ordered = {};
+    Object.keys(obj).sort().forEach(function (key) {
+        ordered[key] = obj[key];
+    });
+    return ordered;
 }
 exports.sortObject = sortObject;
 function generateSignature(arg, privateKey) {

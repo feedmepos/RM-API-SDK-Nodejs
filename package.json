@@ -23,15 +23,13 @@
   ],
   "main": "dist/index.js",
   "dependencies": {
-    "axios": "^0.18.0",
-    "lodash": "^4.17.11"
+    "axios": "^0.18.0"
   },
   "scripts": {
     "build": "tsc",
     "watch": "concurrently \"tsc --watch\" \"nodemon dist/index.js\""
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.119",
     "@types/node": "^10.14.4",
     "concurrently": "^4.1.0",
     "nodemon": "^1.18.9",
