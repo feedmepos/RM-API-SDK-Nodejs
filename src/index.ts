@@ -92,6 +92,7 @@ export namespace RM {
     referenceId: string;
     transactionId: string;
     order: Order;
+    region: 'MALAYSIA' | 'CHINA';
     payee: {
       userId: string;
     };
