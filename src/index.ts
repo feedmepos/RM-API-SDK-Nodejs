@@ -39,6 +39,10 @@ import {
 } from './wechat'
 
 export namespace RM {
+  export enum CurrencyType {
+    MYR = 'MYR'
+  }
+
   export interface Config {
     timeout?: number
     isProduction?: boolean
@@ -48,18 +52,86 @@ export namespace RM {
   }
   
   export interface Response<T = {}> {
-    status: string;
-    success: boolean;
-    data: T;
-    error: RMError;
+    item: T;
+    code: string;
+    error?: Error;
   }
-  
-  export class RMError extends Error {
+
+  export interface Error {
+    code: string;
+    message: string;
+  }
+
+  export class RMError extends Error implements RM.Error {
     code: string;
     constructor(message: string , code: string) {
       super(message);
       this.code = code;
     }
+  }
+
+  export interface QuickPayPayload {
+    authCode: string;
+    order: Order;
+    ipAddress: string;
+    terminalId?: string;
+    storeId: string;
+  }
+
+  export interface Order {
+    id: string;
+    title: string;
+    details: string;
+    amount: number;
+    additionalData: string;
+    currencyType: CurrencyType;
+  }
+
+  export interface PaymentTransactionItem {
+    store: Store;
+    referenceId: string;
+    transactionId: string;
+    order: Order;
+    payee: {
+      userId: string;
+    };
+    currencyType: CurrencyType;
+    platform: string;
+    method: string;
+    type: string;
+    status: string;
+    error: string;
+    createdAt: Date;
+    updatedAt: Date;
+  }
+
+  export interface Store {
+    id: string;
+    name: string;
+    addressLine1: string;
+    addressLine2: string;
+    postCode: string;
+    city: string;
+    state: string;
+    country: string;
+    countryCode: string;
+    phoneNumber: string;
+    geoLocation: string;
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+  }
+
+  export interface RefundPayload {
+    transactionId: string;
+    refund: Refund;
+    reason: string;
+  }
+
+  export interface Refund {
+    amount: number,
+    currencyType: CurrencyType,
+    type: 'FULL' | 'PARTIAL',
   }
 }
 
@@ -118,12 +190,12 @@ export interface RMSDKInstance {
     oauthInstance: AxiosInstance,
     openApiInstance: AxiosInstance,
 
-    initQuickPay: (acessToken: string, data: object) => Promise<any>,
-    refund: (acessToken: string, data: object) => Promise<any>,
-    reverse: (acessToken: string, data: object) => Promise<any>,
+    initQuickPay: (acessToken: string, data: RM.QuickPayPayload) => Promise<RM.Response<RM.PaymentTransactionItem>>,
+    refund: (acessToken: string, data: RM.RefundPayload) => Promise<RM.Response<RM.PaymentTransactionItem>>,
+    reverse: (acessToken: string, data: object) => Promise<RM.Response<RM.PaymentTransactionItem>>,
     getPaymentTransactions: (acessToken: string) => Promise<any>,
-    getPaymentTransactionById: (acessToken: string, Id: string) => Promise<any>,
-    getPaymentTransactionByOrderId:(acessToken: string, orderId: string) => Promise<any>,
+    getPaymentTransactionById: (acessToken: string, Id: string) => Promise<RM.Response<RM.PaymentTransactionItem>>,
+    getPaymentTransactionByOrderId:(acessToken: string, orderId: string) => Promise<RM.Response<RM.PaymentTransactionItem>>,
     getDailySettlementReport:(acessToken: string, data: object) => Promise<any>, 
 
     createTransactionUrl: (acessToken: string, data: object) => Promise<any>,

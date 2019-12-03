@@ -36,6 +36,10 @@ var voucher_1 = require("./voucher");
 var wechat_1 = require("./wechat");
 var RM;
 (function (RM) {
+    var CurrencyType;
+    (function (CurrencyType) {
+        CurrencyType["MYR"] = "MYR";
+    })(CurrencyType = RM.CurrencyType || (RM.CurrencyType = {}));
     var RMError = /** @class */ (function (_super) {
         __extends(RMError, _super);
         function RMError(message, code) {

@@ -1,6 +1,9 @@
 import { AxiosInstance } from 'axios';
 import { ILoyaltyRewardArg } from './loyalty';
 export declare namespace RM {
+    enum CurrencyType {
+        MYR = "MYR"
+    }
     interface Config {
         timeout?: number;
         isProduction?: boolean;
@@ -9,14 +12,75 @@ export declare namespace RM {
         privateKey: string;
     }
     interface Response<T = {}> {
-        status: string;
-        success: boolean;
-        data: T;
-        error: RMError;
+        item: T;
+        code: string;
+        error?: Error;
     }
-    class RMError extends Error {
+    interface Error {
+        code: string;
+        message: string;
+    }
+    class RMError extends Error implements RM.Error {
         code: string;
         constructor(message: string, code: string);
+    }
+    interface QuickPayPayload {
+        authCode: string;
+        order: Order;
+        ipAddress: string;
+        terminalId?: string;
+        storeId: string;
+    }
+    interface Order {
+        id: string;
+        title: string;
+        details: string;
+        amount: number;
+        additionalData: string;
+        currencyType: CurrencyType;
+    }
+    interface PaymentTransactionItem {
+        store: Store;
+        referenceId: string;
+        transactionId: string;
+        order: Order;
+        payee: {
+            userId: string;
+        };
+        currencyType: CurrencyType;
+        platform: string;
+        method: string;
+        type: string;
+        status: string;
+        error: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }
+    interface Store {
+        id: string;
+        name: string;
+        addressLine1: string;
+        addressLine2: string;
+        postCode: string;
+        city: string;
+        state: string;
+        country: string;
+        countryCode: string;
+        phoneNumber: string;
+        geoLocation: string;
+        status: string;
+        createdAt: string;
+        updatedAt: string;
+    }
+    interface RefundPayload {
+        transactionId: string;
+        refund: Refund;
+        reason: string;
+    }
+    interface Refund {
+        amount: number;
+        currencyType: CurrencyType;
+        type: 'FULL' | 'PARTIAL';
     }
 }
 export interface RMSDKInstance {
@@ -61,12 +125,12 @@ export interface RMSDKInstance {
         openApiUrl: string;
         oauthInstance: AxiosInstance;
         openApiInstance: AxiosInstance;
-        initQuickPay: (acessToken: string, data: object) => Promise<any>;
-        refund: (acessToken: string, data: object) => Promise<any>;
-        reverse: (acessToken: string, data: object) => Promise<any>;
+        initQuickPay: (acessToken: string, data: RM.QuickPayPayload) => Promise<RM.Response<RM.PaymentTransactionItem>>;
+        refund: (acessToken: string, data: RM.RefundPayload) => Promise<RM.Response<RM.PaymentTransactionItem>>;
+        reverse: (acessToken: string, data: object) => Promise<RM.Response<RM.PaymentTransactionItem>>;
         getPaymentTransactions: (acessToken: string) => Promise<any>;
-        getPaymentTransactionById: (acessToken: string, Id: string) => Promise<any>;
-        getPaymentTransactionByOrderId: (acessToken: string, orderId: string) => Promise<any>;
+        getPaymentTransactionById: (acessToken: string, Id: string) => Promise<RM.Response<RM.PaymentTransactionItem>>;
+        getPaymentTransactionByOrderId: (acessToken: string, orderId: string) => Promise<RM.Response<RM.PaymentTransactionItem>>;
         getDailySettlementReport: (acessToken: string, data: object) => Promise<any>;
         createTransactionUrl: (acessToken: string, data: object) => Promise<any>;
         getTransactionUrl: (accessToken: string) => Promise<any>;

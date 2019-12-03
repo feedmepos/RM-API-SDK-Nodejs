@@ -27,7 +27,7 @@ function initQuickPay(accessToken, data) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    });
+    }).then(function (x) { return x.data; });
 }
 exports.initQuickPay = initQuickPay;
 function refund(accessToken, data) {
@@ -50,7 +50,7 @@ function refund(accessToken, data) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    });
+    }).then(function (x) { return x.data; });
 }
 exports.refund = refund;
 function reverse(accessToken, data) {
@@ -73,7 +73,7 @@ function reverse(accessToken, data) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    });
+    }).then(function (x) { return x.data; });
 }
 exports.reverse = reverse;
 function getPaymentTransactions(accessToken) {
@@ -121,7 +121,7 @@ function getPaymentTransactionById(accessToken, Id) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    });
+    }).then(function (x) { return x.data; });
 }
 exports.getPaymentTransactionById = getPaymentTransactionById;
 function getPaymentTransactionByOrderId(accessToken, orderId) {
@@ -145,7 +145,7 @@ function getPaymentTransactionByOrderId(accessToken, orderId) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    });
+    }).then(function (x) { return x.data; });
 }
 exports.getPaymentTransactionByOrderId = getPaymentTransactionByOrderId;
 function getDailySettlementReport(accessToken, data) {

@@ -1,5 +1,5 @@
 import crypto = require('crypto')
-import { RMSDKInstance } from '../'
+import { RMSDKInstance, RM } from '../'
 import { generateSignature, sortObject } from '../signature'
 
 /**
@@ -7,7 +7,7 @@ import { generateSignature, sortObject } from '../signature'
  *
  * @return {Object} Transaction object("item")
  */
-export function initQuickPay(this: RMSDKInstance, accessToken: string, data: object) {
+export function initQuickPay(this: RMSDKInstance, accessToken: string, data: RM.QuickPayPayload): Promise<RM.Response<RM.PaymentTransactionItem>> {
     const nonceStr = crypto.randomBytes(32).toString('hex')
     const timestamp = new Date().getTime().toString()
         
@@ -28,10 +28,10 @@ export function initQuickPay(this: RMSDKInstance, accessToken: string, data: obj
                 timestamp,
             }, this.privateKey)
         }
-    })
+    }).then<RM.Response<RM.PaymentTransactionItem>>(x => x.data)
 }
     
-export function refund(this: RMSDKInstance, accessToken: string, data: object) {
+export function refund(this: RMSDKInstance, accessToken: string, data: RM.RefundPayload): Promise<RM.Response<RM.PaymentTransactionItem>> {
     const nonceStr = crypto.randomBytes(32).toString('hex')
     const timestamp = new Date().getTime().toString()
 
@@ -52,10 +52,10 @@ export function refund(this: RMSDKInstance, accessToken: string, data: object) {
                 timestamp,
             }, this.privateKey)
         }
-    })
+    }).then<RM.Response<RM.PaymentTransactionItem>>(x => x.data)
 }
 
-export function reverse(this: RMSDKInstance, accessToken: string, data: object) {
+export function reverse(this: RMSDKInstance, accessToken: string, data: object): Promise<RM.Response<RM.PaymentTransactionItem>> {
     const nonceStr = crypto.randomBytes(32).toString('hex')
     const timestamp = new Date().getTime().toString()
 
@@ -76,7 +76,7 @@ export function reverse(this: RMSDKInstance, accessToken: string, data: object) 
                 timestamp,
             }, this.privateKey)
         }
-    })
+    }).then<RM.Response<RM.PaymentTransactionItem>>(x => x.data)
 }
 
 export function getPaymentTransactions(this: RMSDKInstance, accessToken: string) {
@@ -104,7 +104,7 @@ export function getPaymentTransactions(this: RMSDKInstance, accessToken: string)
     })
 }
     
-export function getPaymentTransactionById(this: RMSDKInstance, accessToken: string, Id: string) {
+export function getPaymentTransactionById(this: RMSDKInstance, accessToken: string, Id: string): Promise<RM.Response<RM.PaymentTransactionItem>> {
     const nonceStr = crypto.randomBytes(32).toString('hex')
     const timestamp = new Date().getTime().toString()
     const data = {};
@@ -126,10 +126,10 @@ export function getPaymentTransactionById(this: RMSDKInstance, accessToken: stri
                 timestamp,
             }, this.privateKey)
         }
-    })
+    }).then<RM.Response<RM.PaymentTransactionItem>>(x => x.data)
 }
 
-export function getPaymentTransactionByOrderId(this: RMSDKInstance, accessToken: string, orderId: string) {
+export function getPaymentTransactionByOrderId(this: RMSDKInstance, accessToken: string, orderId: string): Promise<RM.Response<RM.PaymentTransactionItem>> {
     const nonceStr = crypto.randomBytes(32).toString('hex')
     const timestamp = new Date().getTime().toString()
     const data = {};
@@ -151,7 +151,7 @@ export function getPaymentTransactionByOrderId(this: RMSDKInstance, accessToken:
                 timestamp,
             }, this.privateKey)
         }
-    })
+    }).then<RM.Response<RM.PaymentTransactionItem>>(x => x.data)
 }
 
 export function getDailySettlementReport(this: RMSDKInstance, accessToken: string, data: object) {
