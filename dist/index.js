@@ -68,7 +68,7 @@ function axiosFactory(url, timeout) {
     }, function (error) {
         if (error.response) {
             if (error.response.data && error.response.data.error) {
-                return Promise.reject(new RM.RMError(error.response.data.error.message, error.response.data.error.code));
+                return Promise.reject(new RM.RMError(error.response.data.error.message, error.response.data.error.code, error));
             }
             return Promise.reject(new RM.RMError('unhandled revenue monster error', 'UNKNOWN_ERROR', error));
         }
