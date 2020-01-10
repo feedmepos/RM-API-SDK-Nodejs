@@ -42,9 +42,10 @@ var RM;
     })(CurrencyType = RM.CurrencyType || (RM.CurrencyType = {}));
     var RMError = /** @class */ (function (_super) {
         __extends(RMError, _super);
-        function RMError(message, code) {
+        function RMError(message, code, raw) {
             var _this = _super.call(this, message) || this;
             _this.code = code;
+            _this.raw = raw;
             return _this;
         }
         return RMError;
@@ -61,14 +62,17 @@ function axiosFactory(url, timeout) {
     });
     client.interceptors.response.use(function (response) {
         if (response && response.data && response.data.error) {
-            return Promise.reject(new RM.RMError(response.data.error.message, response.data.error.code));
+            return Promise.reject(new RM.RMError(response.data.error.message, response.data.error.code, response));
         }
         return response;
     }, function (error) {
-        if (error.response && error.response.data && error.response.data.error) {
-            return Promise.reject(new RM.RMError(error.response.data.error.message, error.response.data.error.code));
+        if (error.response) {
+            if (error.response.data && error.response.data.error) {
+                return Promise.reject(new RM.RMError(error.response.data.error.message, error.response.data.error.code));
+            }
+            return Promise.reject(new RM.RMError('unhandled revenue monster error', 'UNKNOWN_ERROR', error));
         }
-        return Promise.reject(new RM.RMError('unhandled revenue monster error', 'UNKNOWN_ERROR'));
+        return Promise.reject(new RM.RMError(error.message, 'NETWORK_ERROR', error));
     });
     return client;
 }

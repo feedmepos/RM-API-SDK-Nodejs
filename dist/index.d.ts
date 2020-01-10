@@ -22,7 +22,8 @@ export declare namespace RM {
     }
     class RMError extends Error implements RM.Error {
         code: string;
-        constructor(message: string, code: string);
+        raw: any;
+        constructor(message: string, code: string, raw?: any);
     }
     interface QuickPayPayload {
         authCode: string;

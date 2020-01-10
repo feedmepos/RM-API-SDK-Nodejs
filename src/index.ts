@@ -64,9 +64,11 @@ export namespace RM {
 
   export class RMError extends Error implements RM.Error {
     code: string;
-    constructor(message: string , code: string) {
+    raw: any;
+    constructor(message: string , code: string, raw?: any) {
       super(message);
       this.code = code;
+      this.raw = raw;
     }
   }
 
@@ -217,15 +219,18 @@ function axiosFactory(url: string, timeout: number): AxiosInstance {
   client.interceptors.response.use(
     (response: AxiosResponse<RM.Response>): any => {
       if (response && response.data && response.data.error) {
-        return Promise.reject(new RM.RMError(response.data.error.message, response.data.error.code));
+        return Promise.reject(new RM.RMError(response.data.error.message, response.data.error.code, response));
       }
       return response;
     },
     (error): Promise<any> => {
-      if (error.response && error.response.data && error.response.data.error) {
-        return Promise.reject(new RM.RMError(error.response.data.error.message, error.response.data.error.code));
+      if(error.response) {
+        if (error.response.data && error.response.data.error) {
+          return Promise.reject(new RM.RMError(error.response.data.error.message, error.response.data.error.code));
+        }
+        return Promise.reject(new RM.RMError('unhandled revenue monster error', 'UNKNOWN_ERROR', error));
       }
-      return Promise.reject(new RM.RMError('unhandled revenue monster error', 'UNKNOWN_ERROR'));
+      return Promise.reject(new RM.RMError(error.message, 'NETWORK_ERROR', error));
     },
   );
   return client;
