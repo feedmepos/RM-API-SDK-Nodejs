@@ -51,7 +51,7 @@ export namespace RM {
     privateKey: string
   }
   
-  export interface Response<T = {}> {
+  export interface Response<T = any> {
     item: T;
     code: string;
     error?: Error;
@@ -218,16 +218,10 @@ function axiosFactory(url: string, timeout: number): AxiosInstance {
   });
   client.interceptors.response.use(
     (response: AxiosResponse<RM.Response>): any => {
-      if (response && response.data && response.data.error) {
-        return Promise.reject(new RM.RMError(response.data.error.message, response.data.error.code, response));
-      }
-      return response;
-    },
-    (error): Promise<any> => {
-      if(error.response) {
-        const body = error.response.data;
-        if (body && body.error) {
-          return Promise.reject(new RM.RMError(body.error.message, body.error.code, error));
+      const body = response.data;
+      if(body) {
+        if (body.error) {
+          return Promise.reject(new RM.RMError(body.error.message, body.error.code, response));
         }
 
         const item = body.item;
@@ -243,14 +237,23 @@ function axiosFactory(url: string, timeout: number): AxiosInstance {
             message = item.error;
           }
           if(status === 'failed') {
-            return Promise.reject(new RM.RMError(message, status, error));
+            return Promise.reject(new RM.RMError(message, status, response));
           }
         }
-
-        if(body.items && body.items.status !== 'SUCCESS') {
+      } else {
+        return Promise.reject(new RM.RMError('unhandled revenue monster error', 'UNKNOWN_ERROR', response));
+      }
+      if (response && response.data && response.data.error) {
+        return Promise.reject(new RM.RMError(response.data.error.message, response.data.error.code, response));
+      }
+      return response;
+    },
+    (error): Promise<any> => {
+      if(error.response) {
+        const body = error.response.data;
+        if (body && body.error) {
           return Promise.reject(new RM.RMError(body.error.message, body.error.code, error));
         }
-        
         return Promise.reject(new RM.RMError('unhandled revenue monster error', 'UNKNOWN_ERROR', error));
       }
       return Promise.reject(new RM.RMError(error.message, 'NETWORK_ERROR', error));

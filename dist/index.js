@@ -61,15 +61,10 @@ function axiosFactory(url, timeout) {
         }
     });
     client.interceptors.response.use(function (response) {
-        if (response && response.data && response.data.error) {
-            return Promise.reject(new RM.RMError(response.data.error.message, response.data.error.code, response));
-        }
-        return response;
-    }, function (error) {
-        if (error.response) {
-            var body = error.response.data;
-            if (body && body.error) {
-                return Promise.reject(new RM.RMError(body.error.message, body.error.code, error));
+        var body = response.data;
+        if (body) {
+            if (body.error) {
+                return Promise.reject(new RM.RMError(body.error.message, body.error.code, response));
             }
             var item = body.item;
             if (item && typeof item === 'object') {
@@ -85,10 +80,21 @@ function axiosFactory(url, timeout) {
                     message = item.error;
                 }
                 if (status_1 === 'failed') {
-                    return Promise.reject(new RM.RMError(message, status_1, error));
+                    return Promise.reject(new RM.RMError(message, status_1, response));
                 }
             }
-            if (body.items && body.items.status !== 'SUCCESS') {
+        }
+        else {
+            return Promise.reject(new RM.RMError('unhandled revenue monster error', 'UNKNOWN_ERROR', response));
+        }
+        if (response && response.data && response.data.error) {
+            return Promise.reject(new RM.RMError(response.data.error.message, response.data.error.code, response));
+        }
+        return response;
+    }, function (error) {
+        if (error.response) {
+            var body = error.response.data;
+            if (body && body.error) {
                 return Promise.reject(new RM.RMError(body.error.message, body.error.code, error));
             }
             return Promise.reject(new RM.RMError('unhandled revenue monster error', 'UNKNOWN_ERROR', error));

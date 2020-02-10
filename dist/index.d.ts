@@ -11,7 +11,7 @@ export declare namespace RM {
         clientSecret: string;
         privateKey: string;
     }
-    interface Response<T = {}> {
+    interface Response<T = any> {
         item: T;
         code: string;
         error?: Error;
