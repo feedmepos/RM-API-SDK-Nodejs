@@ -67,8 +67,29 @@ function axiosFactory(url, timeout) {
         return response;
     }, function (error) {
         if (error.response) {
-            if (error.response.data && error.response.data.error) {
-                return Promise.reject(new RM.RMError(error.response.data.error.message, error.response.data.error.code, error));
+            var body = error.response.data;
+            if (body && body.error) {
+                return Promise.reject(new RM.RMError(body.error.message, body.error.code, error));
+            }
+            var item = body.item;
+            if (item && typeof item === 'object') {
+                var status_1 = 'UNKNOWN_STATUS';
+                var message = 'UNKNOWN_ERROR';
+                if (typeof item.status === 'string') {
+                    status_1 = item.status.toLowerCase();
+                }
+                if (typeof item.error === 'object' && typeof item.error.message === 'string') {
+                    message = item.error.message;
+                }
+                else if (typeof item.error === 'string') {
+                    message = item.error;
+                }
+                if (status_1 === 'failed') {
+                    return Promise.reject(new RM.RMError(message, status_1, error));
+                }
+            }
+            if (body.items && body.items.status !== 'SUCCESS') {
+                return Promise.reject(new RM.RMError(body.error.message, body.error.code, error));
             }
             return Promise.reject(new RM.RMError('unhandled revenue monster error', 'UNKNOWN_ERROR', error));
         }

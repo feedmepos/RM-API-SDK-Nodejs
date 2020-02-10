@@ -225,9 +225,32 @@ function axiosFactory(url: string, timeout: number): AxiosInstance {
     },
     (error): Promise<any> => {
       if(error.response) {
-        if (error.response.data && error.response.data.error) {
-          return Promise.reject(new RM.RMError(error.response.data.error.message, error.response.data.error.code, error));
+        const body = error.response.data;
+        if (body && body.error) {
+          return Promise.reject(new RM.RMError(body.error.message, body.error.code, error));
         }
+
+        const item = body.item;
+        if(item && typeof item === 'object') {
+          let status = 'UNKNOWN_STATUS';
+          let message = 'UNKNOWN_ERROR';
+          if(typeof item.status === 'string') {
+            status = item.status.toLowerCase();
+          }
+          if(typeof item.error === 'object' && typeof item.error.message === 'string') {
+            message = item.error.message;
+          } else if(typeof item.error === 'string') {
+            message = item.error;
+          }
+          if(status === 'failed') {
+            return Promise.reject(new RM.RMError(message, status, error));
+          }
+        }
+
+        if(body.items && body.items.status !== 'SUCCESS') {
+          return Promise.reject(new RM.RMError(body.error.message, body.error.code, error));
+        }
+        
         return Promise.reject(new RM.RMError('unhandled revenue monster error', 'UNKNOWN_ERROR', error));
       }
       return Promise.reject(new RM.RMError(error.message, 'NETWORK_ERROR', error));
