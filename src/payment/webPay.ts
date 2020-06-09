@@ -1,6 +1,6 @@
 import crypto = require('crypto')
 import { RMSDKInstance, RM } from '../'
-import { generateSignature, sortObject } from '../signature'
+import { generateSignature } from '../signature'
 
 export function createWebPay(this: RMSDKInstance, accessToken: string, data: RM.CreateWebPayPayload) {
     const nonceStr = crypto.randomBytes(32).toString('hex')
@@ -9,7 +9,7 @@ export function createWebPay(this: RMSDKInstance, accessToken: string, data: RM.
     return this.openApiInstance({
         url: '/payment/online',
         method: 'post',
-        data: sortObject(data),
+        data,
         headers: {
             'Authorization': 'Bearer ' + accessToken,
             'X-Timestamp': timestamp,

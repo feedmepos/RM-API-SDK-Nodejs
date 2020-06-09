@@ -52,6 +52,7 @@ var RM;
         Method["GRABPAY_MY"] = "GRABPAY_MY";
         Method["RAZER_MY"] = "RAZER_MY";
         Method["GOBIZ_MY"] = "GOBIZ_MY";
+        Method["MAYBANK_MY"] = "MAYBANK_MY";
     })(Method = RM.Method || (RM.Method = {}));
     var LayoutVersion;
     (function (LayoutVersion) {

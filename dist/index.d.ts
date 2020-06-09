@@ -13,11 +13,12 @@ export declare namespace RM {
         ALIPAY_CN = "ALIPAY_CN",
         GRABPAY_MY = "GRABPAY_MY",
         RAZER_MY = "RAZER_MY",
-        GOBIZ_MY = "GOBIZ_MY"
+        GOBIZ_MY = "GOBIZ_MY",
+        MAYBANK_MY = "MAYBANK_MY"
     }
     interface CreateWebPayPayload {
         order: Order;
-        method: Method[];
+        method: string[];
         type: TransactionType;
         storeId: string;
         redirectUrl: string;

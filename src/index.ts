@@ -56,11 +56,12 @@ export namespace RM {
     GRABPAY_MY = 'GRABPAY_MY',
     RAZER_MY = 'RAZER_MY',
     GOBIZ_MY = 'GOBIZ_MY',
+    MAYBANK_MY = 'MAYBANK_MY'
   }
 
   export interface CreateWebPayPayload {
     order: Order;
-    method: Method[];
+    method: string[];
     type: TransactionType;
     storeId: string;
     redirectUrl: string;

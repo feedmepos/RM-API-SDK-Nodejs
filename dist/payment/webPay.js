@@ -8,7 +8,7 @@ function createWebPay(accessToken, data) {
     return this.openApiInstance({
         url: '/payment/online',
         method: 'post',
-        data: signature_1.sortObject(data),
+        data: data,
         headers: {
             'Authorization': 'Bearer ' + accessToken,
             'X-Timestamp': timestamp,
