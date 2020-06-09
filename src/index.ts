@@ -16,6 +16,9 @@ import {
   getTransactionUrlByCode,
   getTransactionsByCode,
 } from './payment/transactionQR'
+import {
+  createWebPay,
+} from './payment/webPay'
 import { getMerchantProfile, getMerchantSubscriptions } from './merchant'
 import { getUserProfile } from './user'
 import {
@@ -39,6 +42,37 @@ import {
 } from './wechat'
 
 export namespace RM {
+  export enum TransactionType {
+    WEB_PAYMENT = 'WEB_PAYMENT',
+  }
+  
+  export enum Method {
+    WECHATPAY_MY = 'WECHATPAY_MY',
+    WECHATPAY_CN = 'WECHATPAY_CN',
+    PRESTO_MY = 'PRESTO_MY',
+    BOOST_MY = 'BOOST_MY',
+    TNG_MY = 'TNG_MY',
+    ALIPAY_CN = 'ALIPAY_CN',
+    GRABPAY_MY = 'GRABPAY_MY',
+    RAZER_MY = 'RAZER_MY',
+    GOBIZ_MY = 'GOBIZ_MY',
+  }
+
+  export interface CreateWebPayPayload {
+    order: Order;
+    method: Method[];
+    type: TransactionType;
+    storeId: string;
+    redirectUrl: string;
+    notifyUrl: string;
+    layoutVersion: LayoutVersion
+  }
+  
+  export enum LayoutVersion {
+    v1 = 'v1',
+    v2 = 'v2',
+  }
+  
   export enum CurrencyType {
     MYR = 'MYR'
   }
@@ -205,6 +239,8 @@ export interface RMSDKInstance {
     getTransactionUrl: (accessToken: string) => Promise<any>,
     getTransactionUrlByCode: (accessToken: string, code: string) => Promise<any>,
     getTransactionsByCode: (accessToken: string, code: string) => Promise<any>,
+
+    createWebPay: (accessToken: string, data: RM.CreateWebPayPayload) => Promise<any>
   }
 }
 
@@ -346,6 +382,8 @@ export function RMSDK(instanceConfig?: RM.Config): RMSDKInstance {
       getTransactionUrl,
       getTransactionUrlByCode,
       getTransactionsByCode,
+
+      createWebPay,
     },
 
     giveLoyaltyPoint,
