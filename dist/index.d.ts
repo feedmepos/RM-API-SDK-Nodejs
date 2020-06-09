@@ -1,6 +1,33 @@
 import { AxiosInstance } from 'axios';
 import { ILoyaltyRewardArg } from './loyalty';
 export declare namespace RM {
+    enum TransactionType {
+        WEB_PAYMENT = "WEB_PAYMENT"
+    }
+    enum Method {
+        WECHATPAY_MY = "WECHATPAY_MY",
+        WECHATPAY_CN = "WECHATPAY_CN",
+        PRESTO_MY = "PRESTO_MY",
+        BOOST_MY = "BOOST_MY",
+        TNG_MY = "TNG_MY",
+        ALIPAY_CN = "ALIPAY_CN",
+        GRABPAY_MY = "GRABPAY_MY",
+        RAZER_MY = "RAZER_MY",
+        GOBIZ_MY = "GOBIZ_MY"
+    }
+    interface CreateWebPayPayload {
+        order: Order;
+        method: Method[];
+        type: TransactionType;
+        storeId: string;
+        redirectUrl: string;
+        notifyUrl: string;
+        layoutVersion: LayoutVersion;
+    }
+    enum LayoutVersion {
+        v1 = "v1",
+        v2 = "v2"
+    }
     enum CurrencyType {
         MYR = "MYR"
     }
@@ -138,6 +165,7 @@ export interface RMSDKInstance {
         getTransactionUrl: (accessToken: string) => Promise<any>;
         getTransactionUrlByCode: (accessToken: string, code: string) => Promise<any>;
         getTransactionsByCode: (accessToken: string, code: string) => Promise<any>;
+        createWebPay: (accessToken: string, data: RM.CreateWebPayPayload) => Promise<any>;
     };
 }
 export declare function RMSDK(instanceConfig?: RM.Config): RMSDKInstance;
