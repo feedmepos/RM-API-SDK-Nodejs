@@ -45,8 +45,25 @@ export namespace RM {
   export enum TransactionType {
     WEB_PAYMENT = 'WEB_PAYMENT',
   }
-  
+
   export enum Method {
+    WECHATPAY = 'WECHATPAY',
+    PRESTO = 'PRESTO',
+    ALIPAY = 'ALIPAY',
+    TNG = 'TNG',
+    VCASH = 'VCASH',
+    BOOST = 'BOOST',
+    MAYBANK = 'MAYBANK',
+    GRABPAY = 'GRABPAY',
+    RAZERPAY = 'RAZERPAY',
+    SHOPEEPAY = 'SHOPEEPAY',
+    GOBIZ = 'GOBIZ',
+    ZAPP = 'ZAPP',
+    TAPAY = 'TAPAY',
+    MCASH = 'MCASH',
+  }
+  
+  export enum WebPaymentMethod {
     WECHATPAY_MY = 'WECHATPAY_MY',
     WECHATPAY_CN = 'WECHATPAY_CN',
     PRESTO_MY = 'PRESTO_MY',
@@ -92,6 +109,15 @@ export namespace RM {
     error?: Error;
   }
 
+  export interface WebhookResponse {
+    eventType: "PAYMENT_WEB_ONLINE"
+  }
+
+  export interface WebPaymentWebhook extends WebhookResponse {
+    eventType: "PAYMENT_WEB_ONLINE"
+    data: PaymentTransactionItem
+  }
+
   export interface Error {
     code: string;
     message: string;
@@ -124,6 +150,14 @@ export namespace RM {
     currencyType: CurrencyType;
   }
 
+  export interface WebPaymentItem {
+    item: {
+      code: string;
+      url: string;
+    }
+    checkoutId: string;
+  }
+
   export interface PaymentTransactionItem {
     store: Store;
     referenceId: string;
@@ -135,7 +169,7 @@ export namespace RM {
     };
     currencyType: CurrencyType;
     platform: string;
-    method: string;
+    method: RM.Method;
     type: string;
     status: string;
     error: string;
@@ -241,7 +275,7 @@ export interface RMSDKInstance {
     getTransactionUrlByCode: (accessToken: string, code: string) => Promise<any>,
     getTransactionsByCode: (accessToken: string, code: string) => Promise<any>,
 
-    createWebPay: (accessToken: string, data: RM.CreateWebPayPayload) => Promise<any>
+    createWebPay: (accessToken: string, data: RM.CreateWebPayPayload) => Promise<RM.WebPaymentItem>
   }
 }
 

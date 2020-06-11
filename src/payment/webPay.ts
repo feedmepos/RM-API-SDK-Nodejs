@@ -2,7 +2,7 @@ import crypto = require('crypto')
 import { RMSDKInstance, RM } from '../'
 import { generateSignature, sortObject } from '../signature'
 
-export function createWebPay(this: RMSDKInstance, accessToken: string, data: RM.CreateWebPayPayload) {
+export function createWebPay(this: RMSDKInstance, accessToken: string, data: RM.CreateWebPayPayload): Promise<RM.WebPaymentItem> {
     const nonceStr = crypto.randomBytes(32).toString('hex')
     const timestamp = new Date().getTime().toString()
     
@@ -23,5 +23,5 @@ export function createWebPay(this: RMSDKInstance, accessToken: string, data: RM.
                 timestamp,
             }, this.privateKey)
         }
-    })
+    }).then<RM.WebPaymentItem>(x => x.data)
 }

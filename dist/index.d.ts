@@ -5,6 +5,22 @@ export declare namespace RM {
         WEB_PAYMENT = "WEB_PAYMENT"
     }
     enum Method {
+        WECHATPAY = "WECHATPAY",
+        PRESTO = "PRESTO",
+        ALIPAY = "ALIPAY",
+        TNG = "TNG",
+        VCASH = "VCASH",
+        BOOST = "BOOST",
+        MAYBANK = "MAYBANK",
+        GRABPAY = "GRABPAY",
+        RAZERPAY = "RAZERPAY",
+        SHOPEEPAY = "SHOPEEPAY",
+        GOBIZ = "GOBIZ",
+        ZAPP = "ZAPP",
+        TAPAY = "TAPAY",
+        MCASH = "MCASH"
+    }
+    enum WebPaymentMethod {
         WECHATPAY_MY = "WECHATPAY_MY",
         WECHATPAY_CN = "WECHATPAY_CN",
         PRESTO_MY = "PRESTO_MY",
@@ -44,6 +60,13 @@ export declare namespace RM {
         code: string;
         error?: Error;
     }
+    interface WebhookResponse {
+        eventType: "PAYMENT_WEB_ONLINE";
+    }
+    interface WebPaymentWebhook extends WebhookResponse {
+        eventType: "PAYMENT_WEB_ONLINE";
+        data: PaymentTransactionItem;
+    }
     interface Error {
         code: string;
         message: string;
@@ -68,6 +91,13 @@ export declare namespace RM {
         additionalData: string;
         currencyType: CurrencyType;
     }
+    interface WebPaymentItem {
+        item: {
+            code: string;
+            url: string;
+        };
+        checkoutId: string;
+    }
     interface PaymentTransactionItem {
         store: Store;
         referenceId: string;
@@ -79,7 +109,7 @@ export declare namespace RM {
         };
         currencyType: CurrencyType;
         platform: string;
-        method: string;
+        method: RM.Method;
         type: string;
         status: string;
         error: string;
@@ -166,7 +196,7 @@ export interface RMSDKInstance {
         getTransactionUrl: (accessToken: string) => Promise<any>;
         getTransactionUrlByCode: (accessToken: string, code: string) => Promise<any>;
         getTransactionsByCode: (accessToken: string, code: string) => Promise<any>;
-        createWebPay: (accessToken: string, data: RM.CreateWebPayPayload) => Promise<any>;
+        createWebPay: (accessToken: string, data: RM.CreateWebPayPayload) => Promise<RM.WebPaymentItem>;
     };
 }
 export declare function RMSDK(instanceConfig?: RM.Config): RMSDKInstance;

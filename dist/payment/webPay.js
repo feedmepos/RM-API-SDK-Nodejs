@@ -22,7 +22,7 @@ function createWebPay(accessToken, data) {
                 timestamp: timestamp,
             }, this.privateKey)
         }
-    });
+    }).then(function (x) { return x.data; });
 }
 exports.createWebPay = createWebPay;
 //# sourceMappingURL=webPay.js.map
