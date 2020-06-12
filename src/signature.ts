@@ -39,7 +39,7 @@ export function generateSignature(arg: {
     + '&timestamp=' + arg.timestamp
 
     return crypto
-        .createSign('SHA256')
+        .createSign('sha256')
         .update(full_signature)
         .sign(privateKey, 'base64')
 }
