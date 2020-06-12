@@ -31,7 +31,7 @@ function generateSignature(arg, privateKey) {
         + '&signType=' + arg.signType
         + '&timestamp=' + arg.timestamp;
     return crypto
-        .createSign('sha256')
+        .createSign('RSA-SHA256')
         .update(full_signature)
         .sign(privateKey, 'base64');
 }
