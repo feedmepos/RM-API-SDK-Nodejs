@@ -1,4 +1,4 @@
-import { AxiosInstance } from 'axios';
+import { AxiosInstance, AxiosAdapter } from 'axios';
 import { ILoyaltyRewardArg } from './loyalty';
 export declare namespace RM {
     enum TransactionType {
@@ -54,6 +54,7 @@ export declare namespace RM {
         clientId: string;
         clientSecret: string;
         privateKey: string;
+        adapter?: AxiosAdapter;
     }
     interface Response<T = any> {
         item: T;

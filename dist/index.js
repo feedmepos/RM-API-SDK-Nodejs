@@ -161,8 +161,9 @@ function RMSDK(instanceConfig) {
     var openApiUrl = config.isProduction
         ? 'https://open.revenuemonster.my/' + config.openApiVersion
         : 'https://sb-open.revenuemonster.my/' + config.openApiVersion;
-    var oauthInstance = axiosFactory(oauthUrl, config.timeout);
-    var openApiInstance = axiosFactory(openApiUrl, config.timeout);
+    var adapter = instanceConfig ? instanceConfig.adapter : undefined;
+    var oauthInstance = axiosFactory(oauthUrl, config.timeout, adapter);
+    var openApiInstance = axiosFactory(openApiUrl, config.timeout, adapter);
     return {
         timeout: config.timeout,
         isProduction: config.isProduction,

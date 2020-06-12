@@ -101,6 +101,7 @@ export namespace RM {
     clientId: string
     clientSecret: string
     privateKey: string
+    adapter?: AxiosAdapter
   }
   
   export interface Response<T = any> {
@@ -357,9 +358,11 @@ export function RMSDK(instanceConfig?: RM.Config): RMSDKInstance {
     ? 'https://open.revenuemonster.my/' + config.openApiVersion
     : 'https://sb-open.revenuemonster.my/' + config.openApiVersion 
 
-  const oauthInstance = axiosFactory(oauthUrl, config.timeout);
+  const adapter = instanceConfig ? instanceConfig.adapter : undefined
 
-  const openApiInstance = axiosFactory(openApiUrl, config.timeout);
+  const oauthInstance = axiosFactory(oauthUrl, config.timeout, adapter);
+
+  const openApiInstance = axiosFactory(openApiUrl, config.timeout, adapter);
 
   return {
     timeout: config.timeout,
