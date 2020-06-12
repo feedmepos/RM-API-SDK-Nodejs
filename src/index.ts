@@ -144,7 +144,7 @@ export namespace RM {
   export interface Order {
     id: string;
     title: string;
-    details: string;
+    detail: string;
     amount: number;
     additionalData: string;
     currencyType: CurrencyType;
