@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios'
+import axios, { AxiosInstance, AxiosResponse, AxiosAdapter } from 'axios'
 
 import { getClientCredentials, refreshToken } from './credentials'
 import {
@@ -279,13 +279,14 @@ export interface RMSDKInstance {
   }
 }
 
-function axiosFactory(url: string, timeout: number): AxiosInstance {
+function axiosFactory(url: string, timeout: number, adapter?: AxiosAdapter): AxiosInstance {
   const client = axios.create({
     baseURL: url,
     timeout: timeout,
     headers: {
       'Content-Type': 'application/json'
-    }
+    },
+    adapter
   });
   client.interceptors.response.use(
     (response: AxiosResponse<RM.Response>): any => {

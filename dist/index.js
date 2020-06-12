@@ -92,13 +92,14 @@ var RM;
     }(Error));
     RM.RMError = RMError;
 })(RM = exports.RM || (exports.RM = {}));
-function axiosFactory(url, timeout) {
+function axiosFactory(url, timeout, adapter) {
     var client = axios_1.default.create({
         baseURL: url,
         timeout: timeout,
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        adapter: adapter
     });
     client.interceptors.response.use(function (response) {
         var body = response.data;
