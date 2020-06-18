@@ -153,10 +153,10 @@ export namespace RM {
 
   export interface WebPaymentItem {
     item: {
-      code: string;
+      checkoutId: string;
       url: string;
     }
-    checkoutId: string;
+    code: string;
   }
 
   export interface PaymentTransactionItem {

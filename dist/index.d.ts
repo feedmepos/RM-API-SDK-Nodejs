@@ -94,10 +94,10 @@ export declare namespace RM {
     }
     interface WebPaymentItem {
         item: {
-            code: string;
+            checkoutId: string;
             url: string;
         };
-        checkoutId: string;
+        code: string;
     }
     interface PaymentTransactionItem {
         store: Store;
