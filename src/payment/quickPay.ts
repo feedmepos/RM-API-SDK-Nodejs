@@ -130,7 +130,6 @@ export function getPaymentTransactionById(this: RMSDKInstance, accessToken: stri
 export function getPaymentTransactionByOrderId(this: RMSDKInstance, accessToken: string, orderId: string): Promise<RM.Response<RM.PaymentTransactionItem>> {
     const nonceStr = crypto.randomBytes(32).toString('hex')
     const timestamp = new Date().getTime().toString()
-    // const data = {};
 
     return this.openApiInstance({
         url: `/payment/transaction/order/${orderId}`,
