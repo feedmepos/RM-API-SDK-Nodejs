@@ -2,7 +2,8 @@ import { AxiosInstance, AxiosAdapter } from 'axios';
 import { ILoyaltyRewardArg } from './loyalty';
 export declare namespace RM {
     enum TransactionType {
-        WEB_PAYMENT = "WEB_PAYMENT"
+        WEB_PAYMENT = "WEB_PAYMENT",
+        MOBILE_PAYMENT = "MOBILE_PAYMENT"
     }
     enum Method {
         WECHATPAY = "WECHATPAY",
@@ -20,6 +21,13 @@ export declare namespace RM {
         TAPAY = "TAPAY",
         MCASH = "MCASH"
     }
+    enum MobilePaymentMethod {
+        WECHATPAY_MY = "WECHATPAY_MY",
+        BOOST_MY = "BOOST_MY",
+        TNG_MY = "TNG_MY",
+        ALIPAY_CN = "ALIPAY_CN",
+        GRABPAY_MY = "GRABPAY_MY"
+    }
     enum WebPaymentMethod {
         WECHATPAY_MY = "WECHATPAY_MY",
         WECHATPAY_CN = "WECHATPAY_CN",
@@ -32,7 +40,7 @@ export declare namespace RM {
         GOBIZ_MY = "GOBIZ_MY",
         MAYBANK_MY = "MAYBANK_MY"
     }
-    interface CreateWebPayPayload {
+    interface CreateOnlinePayPayload {
         order: Order;
         method: string[];
         type: TransactionType;
@@ -92,12 +100,19 @@ export declare namespace RM {
         additionalData: string;
         currencyType: CurrencyType;
     }
+    interface OnlinePaymentItem {
+        checkoutId: string;
+        url: string;
+    }
     interface WebPaymentItem {
-        item: {
-            checkoutId: string;
-            url: string;
-        };
+        item: OnlinePaymentItem;
         code: string;
+    }
+    enum PaymentTransactionItemStatus {
+        IN_PROCESS = "IN_PROCESS",
+        SUCCESS = "SUCCESS",
+        FAILED = "FAILED",
+        FULL_REFUNDED = "FULL_REFUNDED"
     }
     interface PaymentTransactionItem {
         store: Store;
@@ -112,7 +127,7 @@ export declare namespace RM {
         platform: string;
         method: RM.Method;
         type: string;
-        status: string;
+        status: PaymentTransactionItemStatus;
         error: string;
         createdAt: Date;
         updatedAt: Date;
@@ -197,7 +212,7 @@ export interface RMSDKInstance {
         getTransactionUrl: (accessToken: string) => Promise<any>;
         getTransactionUrlByCode: (accessToken: string, code: string) => Promise<any>;
         getTransactionsByCode: (accessToken: string, code: string) => Promise<any>;
-        createWebPay: (accessToken: string, data: RM.CreateWebPayPayload) => Promise<RM.WebPaymentItem>;
+        createOnlinePay: (accessToken: string, data: RM.CreateOnlinePayPayload) => Promise<RM.Response<RM.OnlinePaymentItem>>;
     };
 }
 export declare function RMSDK(instanceConfig?: RM.Config): RMSDKInstance;

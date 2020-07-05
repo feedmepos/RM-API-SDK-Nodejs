@@ -125,7 +125,6 @@ exports.getPaymentTransactionById = getPaymentTransactionById;
 function getPaymentTransactionByOrderId(accessToken, orderId) {
     var nonceStr = crypto.randomBytes(32).toString('hex');
     var timestamp = new Date().getTime().toString();
-    // const data = {};
     return this.openApiInstance({
         url: "/payment/transaction/order/" + orderId,
         method: 'get',

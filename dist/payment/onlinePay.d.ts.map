@@ -1,0 +1,1 @@
+{"version":3,"file":"onlinePay.d.ts","sourceRoot":"","sources":["../../src/payment/onlinePay.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,aAAa,EAAE,EAAE,EAAE,MAAM,KAAK,CAAA;AAGvC,wBAAgB,eAAe,CAAC,IAAI,EAAE,aAAa,EAAE,WAAW,EAAE,MAAM,EAAE,IAAI,EAAE,EAAE,CAAC,sBAAsB,GAAG,OAAO,CAAC,EAAE,CAAC,QAAQ,CAAC,EAAE,CAAC,iBAAiB,CAAC,CAAC,CAsBrJ"}

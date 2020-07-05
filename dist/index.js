@@ -28,7 +28,7 @@ var axios_1 = require("axios");
 var credentials_1 = require("./credentials");
 var quickPay_1 = require("./payment/quickPay");
 var transactionQR_1 = require("./payment/transactionQR");
-var webPay_1 = require("./payment/webPay");
+var onlinePay_1 = require("./payment/onlinePay");
 var merchant_1 = require("./merchant");
 var user_1 = require("./user");
 var store_1 = require("./store");
@@ -40,6 +40,7 @@ var RM;
     var TransactionType;
     (function (TransactionType) {
         TransactionType["WEB_PAYMENT"] = "WEB_PAYMENT";
+        TransactionType["MOBILE_PAYMENT"] = "MOBILE_PAYMENT";
     })(TransactionType = RM.TransactionType || (RM.TransactionType = {}));
     var Method;
     (function (Method) {
@@ -58,6 +59,14 @@ var RM;
         Method["TAPAY"] = "TAPAY";
         Method["MCASH"] = "MCASH";
     })(Method = RM.Method || (RM.Method = {}));
+    var MobilePaymentMethod;
+    (function (MobilePaymentMethod) {
+        MobilePaymentMethod["WECHATPAY_MY"] = "WECHATPAY_MY";
+        MobilePaymentMethod["BOOST_MY"] = "BOOST_MY";
+        MobilePaymentMethod["TNG_MY"] = "TNG_MY";
+        MobilePaymentMethod["ALIPAY_CN"] = "ALIPAY_CN";
+        MobilePaymentMethod["GRABPAY_MY"] = "GRABPAY_MY";
+    })(MobilePaymentMethod = RM.MobilePaymentMethod || (RM.MobilePaymentMethod = {}));
     var WebPaymentMethod;
     (function (WebPaymentMethod) {
         WebPaymentMethod["WECHATPAY_MY"] = "WECHATPAY_MY";
@@ -91,6 +100,13 @@ var RM;
         return RMError;
     }(Error));
     RM.RMError = RMError;
+    var PaymentTransactionItemStatus;
+    (function (PaymentTransactionItemStatus) {
+        PaymentTransactionItemStatus["IN_PROCESS"] = "IN_PROCESS";
+        PaymentTransactionItemStatus["SUCCESS"] = "SUCCESS";
+        PaymentTransactionItemStatus["FAILED"] = "FAILED";
+        PaymentTransactionItemStatus["FULL_REFUNDED"] = "FULL_REFUNDED";
+    })(PaymentTransactionItemStatus = RM.PaymentTransactionItemStatus || (RM.PaymentTransactionItemStatus = {}));
 })(RM = exports.RM || (exports.RM = {}));
 function axiosFactory(url, timeout, adapter) {
     var client = axios_1.default.create({
@@ -209,7 +225,7 @@ function RMSDK(instanceConfig) {
             getTransactionUrl: transactionQR_1.getTransactionUrl,
             getTransactionUrlByCode: transactionQR_1.getTransactionUrlByCode,
             getTransactionsByCode: transactionQR_1.getTransactionsByCode,
-            createWebPay: webPay_1.createWebPay,
+            createOnlinePay: onlinePay_1.createOnlinePay
         },
         giveLoyaltyPoint: loyalty_1.giveLoyaltyPoint,
         issueVoucher: voucher_1.issueVoucher,
